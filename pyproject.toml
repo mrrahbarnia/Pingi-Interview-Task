@@ -1,0 +1,24 @@
+[project]
+name = "pingi-interview-task"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "django-stubs>=6.0.6",
+    "djangorestframework>=3.17.1",
+    "django-stubs-ext>=6.0.6",
+    "djangorestframework-stubs>=3.17.0",
+    "django>=5.2.15",
+    "pydantic-settings>=2.14.2",
+]
+
+[tool.mypy]
+python_version = "3.12"
+disallow_untyped_defs = true
+warn_untyped_defs = true
+plugins = "mypy_django_plugin.main"
+
+
+[mypy.plugins.django-stubs]
+django_settings_module = "config.settings"
