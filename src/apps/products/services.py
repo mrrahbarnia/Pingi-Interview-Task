@@ -8,6 +8,9 @@ from .exceptions import ProductAlreadyExists
 
 
 def create_product(name: str) -> Product:
+    if selectors.product_exists_by_name(name):
+        raise ProductAlreadyExists()
+
     try:
         return Product.objects.create(name=name)
     except IntegrityError:
@@ -32,11 +35,8 @@ def create_registration(product_id: int) -> Registration:
 def register_product(product_id: int) -> Registration:
     with transaction.atomic():
         affected_rows = update_product_capacity(product_id)
-
         if affected_rows == 0:
-            try:
-                selectors.get_product_by_id(product_id)
-            except Product.DoesNotExist:
+            if not selectors.get_product_by_id(product_id):
                 raise exceptions.ProductNotFound()
 
             raise exceptions.ProductCapacityExceeded()
