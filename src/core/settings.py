@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from src.config import ENVS
+from config import ENVS
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
