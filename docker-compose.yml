@@ -1,0 +1,46 @@
+services:
+  app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      target: testing
+    command: python src/manage.py runserver 0.0.0.0:8000
+    ports:
+      - '8000:8000'
+    volumes:
+      - ./src:/app/src/
+    env_file:
+      - ./.env
+    depends_on:
+      - db
+    restart: always
+
+  db:
+    image: postgres:17.4
+    restart: always
+    environment:
+      - POSTGRES_USER=${POSTGRESQL__USERNAME}
+      - POSTGRES_PASSWORD=${POSTGRESQL__PASSWORD}
+      - POSTGRES_DB=${POSTGRESQL__DATABASE_NAME}
+    ports:
+      - "${POSTGRESQL__PORT}:${POSTGRESQL__PORT}"
+    volumes:
+      - postgresql_volume:/var/lib/postgresql/data
+  
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin_container
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    volumes:
+      - pgadmin_volume:/var/lib/pgadmin
+
+name: pingi
+volumes:
+  postgresql_volume:
+  pgadmin_volume:

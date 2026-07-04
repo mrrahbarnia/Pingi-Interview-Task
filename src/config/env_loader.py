@@ -10,6 +10,7 @@ class _ENVS(BaseSettings):
     )
 
     DJANGO: schemas.Django
+    POSTGRESQL: schemas.PostgreSQL
 
 
 ENVS = _ENVS()  # type: ignore
