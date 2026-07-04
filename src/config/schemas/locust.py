@@ -2,6 +2,4 @@ from pydantic_settings import BaseSettings
 
 
 class Django(BaseSettings):
-    DEBUG_MODE: bool
-    SECRET_KEY: str
-    ALLOWED_HOSTS: list[str]
+    LOAD_TEST_PRODUCT_ID: int

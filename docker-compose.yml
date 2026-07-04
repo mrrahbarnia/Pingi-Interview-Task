@@ -39,6 +39,18 @@ services:
       - db
     volumes:
       - pgadmin_volume:/var/lib/pgadmin
+  
+  locust:
+    image: locustio/locust:2.39.1
+    volumes:
+      - ./load_test:/mnt/locust
+    command: >
+      -f /mnt/locust/locustfile.py
+      --host=http://app:8000
+    ports:
+      - "8089:8089"
+    depends_on:
+      - app
 
 name: pingi
 volumes:
